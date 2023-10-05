@@ -13,6 +13,39 @@
 /*-----------------------------------*\
   #CUSTOM PROPERTY
 \*-----------------------------------*/
+:root {
+  /**
+   * COLORS
+   */ 
+   --primary: hsl(258, 57%, 76%); 
+   --on-primary: hsl(253, 24%, 7%); 
+
+   --background: hsl(270, 5%, 7%);
+   --on-background: hsl(260, 32%, 93%);
+   
+   --surface: hsl(260, 5%, 12%);
+   --on-surface: hsl(256, 17%, 88%);
+   --on-surface-variant: hsl(257, 3%, 49%); 
+   --on-surface-variant-2: hsl(260, 7%, 73%);
+
+   --outline: hsl(260, 2%, 25%);
+
+   --bg-aqi-1: hsl(120, 64%, 72%);
+   --on-bg-aqi-1: hsl(120, 24%, 16%);
+   --bg-aqi-2: hsl(55, 64%, 72%);
+   --on-bg-aqi-2: hsl(54, 24%, 16%);
+   --bg-aqi-3: hsl(36, 64%, 72%);
+   --on-bg-aqi-3: hsl(36, 24%, 16%);
+   --bg-aqi-4: hsl(0, 64%, 72%);
+   --on-bg-aqi-4: hsl(0, 24%, 16%);
+   --bg-aqi-5: hsl(330, 64%, 72%);
+   --on-bg-aqi-5: hsl(330, 24%, 16%);
+   
+   --white: hsl(0, 0%, 100%);
+   --white-alpha-4: hsla(0, 0%, 100%, 0.04);
+   --white-alpha-8: hsla(0, 0%, 100%, 0.078);
+   --black-alpha-10: hsla(0, 0%, 0%, 0.1);
+}
 
 
 
