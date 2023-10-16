@@ -84,3 +84,87 @@ Friday
 
 
 #---------- FOOTER ----------#
+
+
+
+
+
+/*************  CONCEPTS ************/
+RIPPLE EFFECT ON CLICK
+
+```html
+    <button class="icon-btn has-state">
+        <span class="m-icon">search</span>
+    </button>
+```
+
+```css
+    .has-state:focus { animation: ripple 100ms ease-in}
+
+    @keyframes ripple {
+        0% {
+            clip-path: circle(0% at center);
+        }
+        100% {
+            clip-path: circle(100% at center);
+        }
+    }
+```
+
+
+
+
+CIRCULAR REVEAL
+```css
+
+.search-box {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+
+  background-color: var(--surface);
+  color: var(--on-surface);
+
+  opacity: 0;
+  visibility: hidden;
+  clip-path: circle(10% at 70% 3%);
+  transition: clip-path 500ms ease;
+}
+
+.search-box.active {
+  opacity: 1;
+  visibility: visible;
+  clip-path: circle(120% at 70% 3%);
+}
+
+```
+
+
+
+LOADING ICON
+```css
+    .search-input-box::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 16px;
+
+        width: 24px;
+        height: 24px;
+
+        border: 4px solid var(--on-surface);
+        border-left-color: transparent;
+        border-radius: var(--radius-circle);
+
+        animation: loading 500ms linear infinite ; 
+        display: none;
+    }
+
+    .search-input-box.searching::before { display: block}
+
+    @keyframes loading {
+        0% { transform: translateY(-50%) rotate(0deg); }
+        100% { transform: translateY(-50%) rotate(360deg); }
+    }
+```

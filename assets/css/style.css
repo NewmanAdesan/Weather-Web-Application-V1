@@ -70,6 +70,11 @@
     --weight-semiBold: 600;
 
 
+    /**
+      * SIZE
+      */
+    --header-height: 90px;
+
     
     /**
       * BOX SHADOW
@@ -186,8 +191,8 @@ sub {vertical-align: baseline;}
   font-feature-settings: "liga";
   -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
-  height: 1rem;
-  width: 1rem;
+  height: 1em;
+  width: 1em;
   overflow: hidden;
 }
 
@@ -199,12 +204,195 @@ sub {vertical-align: baseline;}
 \*-----------------------------------*/
 
 
+/* REUSED STYLE: PAGE CONTAINER */
+.container {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: 16px;
+}
+
+
+/* REUSED STYLE: ICONS THAT ARE BUTTONS */
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background-color: var(--white-alpha-4);
+  border-radius: var(--radius-circle);
+}
+
+
+/* REUSED STYLE: HIGHLIGHT & CICULAR REVEAL FEATURE */
+.has-state { position: relative; }
+.has-state:hover {box-shadow: var(--shadow-1);}
+.has-state:is(:focus , :focus-visible) {box-shadow: none;}
+.has-state::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  clip-path: circle(100% at 50% 50%);
+  transition: var(--transition-short);
+}
+.has-state:is(:hover, :focus, :focus-visible)::before {background-color: var(--white-alpha-8);}
+.has-state:focus-visible { animation: ripple 250ms ease-in forwards}
+
+@keyframes ripple {
+  0% {
+    clip-path: circle(0% at center);
+  }
+  100% {
+    clip-path: circle(100% at center);
+  }
+}
+
+/* REUSED STYLE: PRIMARY BUTTON */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 48px;
+  line-height: 48px;
+  max-width: max-content;
+  padding-inline: 16px;
+}
+
+.btn-primary[disabled] {
+  background-color: var(--white-alpha-4);
+  color: var(--on-surface-variant);
+  cursor: not-allowed;
+}
+
+.btn-primary[disabled]::before {display: none}
+
+
+/* REUSED STYLE: FONT SIZE UTILITIES */
+.label-2 {
+  font-size: var(--label-2)
+}
+
 
 
 
 /*-----------------------------------*\
   #HEADER
 \*-----------------------------------*/
+
+/* HEADER CONTAINERS */
+.header .logo img { width: 150px;}
+.header .btn-primary { padding-inline: 12px;}
+
+.header .container,
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.header .container{
+  justify-content: space-between;
+}
+
+.header-actions { gap: 8px; }
+
+
+/* SEARCH BOX UI: CIRCULAR REVEAL FUNCTIONALITY */
+.search-box {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  background-color: var(--surface);
+  color: var(--on-surface);
+
+  opacity: 0;
+  visibility: hidden;
+  clip-path: circle(10% at 70% 3%);
+  transition: clip-path 500ms ease;
+}
+
+.search-box.active {
+  opacity: 1;
+  visibility: visible;
+  clip-path: circle(120% at 70% 3%);
+}
+
+
+/* SEARCH BOX UI: LOADING ICON */
+.search-input-box {
+  position: relative;
+  border-bottom: 1px solid var(--outline);
+}
+
+.search-input-box::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 16px;
+
+  width: 24px;
+  height: 24px;
+
+  border: 3px solid var(--on-surface);
+  border-left-color: transparent;
+  border-radius: var(--radius-circle);
+
+  animation: loading 500ms linear infinite ; 
+  display: none;
+}
+
+.search-input-box.searching::before { display: block}
+
+@keyframes loading {
+  0% { transform: translateY(-50%) rotate(0); }
+  100% { transform: translateY(-50%) rotate(1turn); }
+}
+
+
+/* SEARCH BOX UI: LAYOUT & STYLES */
+.search-field {
+  height: 80px;
+  line-height: 80px;
+  margin-inline-start: 54px;
+  padding-inline-end: 16px;
+  outline: none;
+}
+
+.search-field::-webkit-search-cancel-button {display: hidden}
+.search-field::placeholder{color: var(--on-surface-variant)}
+
+.search-input-box .leading-icon {
+  position: absolute;
+  background-color: transparent;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.search-box .search-list { padding-block: 8px 16px; }
+
+.search-box .search-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  height: 56px;
+  padding-inline: 16px 96px;
+}
+
+.search-box .search-item :is(.subtitle, .m-icon) {
+  color: var(--on-surface-variant);
+}
+
+.search-box .search-item .item-link {
+  position: absolute;
+  inset: 0;
+  box-shadow: none;
+}
 
 
 
