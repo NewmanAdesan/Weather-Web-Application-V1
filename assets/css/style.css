@@ -135,7 +135,7 @@ body {
   background-color: var(--background);
   color: var(--on-background);
   font-size: var(--body-3);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 
@@ -159,7 +159,6 @@ body {
 
 
 /* other reset */
-sup, sub {font-size: 0.75rem}
 sup {vertical-align: top;}
 sub {vertical-align: baseline;}
 
@@ -272,8 +271,45 @@ sub {vertical-align: baseline;}
 
 
 /* REUSED STYLE: FONT SIZE UTILITIES */
-.label-2 {
-  font-size: var(--label-2)
+
+.heading { font-size: var(--heading); }
+.title-1 { font-size: var(--title-1) }
+.title-2 {
+  font-size: var(--title-2);
+  margin-block-end: 16px;
+}
+.title-3 { 
+  font-size: var(--title-3);
+  font-weight: var(--weight-semiBold);
+}  
+.label-1 {font-size: var(--label-1)}
+.label-2 { font-size: var(--label-2) }
+.body-1 { font-size: var(--body-1) }
+.body-2 { 
+  font-size: var(--body-2);
+  font-weight: var(--weight-semiBold);
+}
+.body-3 { font-size: var(--body-3) }
+
+
+
+
+
+.section:not(:last-child) {margin-bottom: 16px;}
+
+.card {
+  background-color: var(--surface);
+  color: var(--on-surface);
+}
+
+.card-lg {
+  padding: 20px;
+  border-radius: var(--radius-28);
+}
+
+.card-sm {
+  padding: 16px;
+  border-radius: var(--radius-16);
 }
 
 
@@ -282,6 +318,8 @@ sub {vertical-align: baseline;}
 /*-----------------------------------*\
   #HEADER
 \*-----------------------------------*/
+
+
 
 /* HEADER CONTAINERS */
 .header .logo img { width: 150px;}
@@ -401,6 +439,58 @@ sub {vertical-align: baseline;}
 /*-----------------------------------*\
   #CURRENT WEATHER
 \*-----------------------------------*/
+.current-weather-card .wrapper { 
+  display: flex; 
+  align-items: 
+  center; 
+  gap: 8px; 
+  margin-bottom: 12px;
+
+}
+.current-weather-card .weather-icon {margin-inline: auto;} 
+.current-weather-card .body-3 {text-transform: capitalize;}
+
+.current-weather-card .meta-list {
+  margin-block-start: 16px; 
+  padding-block-start: 16px; 
+  border-block-start: 1px solid var(--outline)
+}
+
+.current-weather-card .meta-item {
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+}
+
+.current-weather-card .meta-item:not(:last-child) {margin-block-end: 12px;}
+
+.current-weather-card .meta-text {color: var(--on-surface-variant);}
+
+
+
+
+
+/*-----------------------------------*\
+  #FORECAST
+\*-----------------------------------*/
+.forecast-card .card-item .wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--on-surface-variant-2)
+}
+
+.forecast-card .card-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.forecast-card .card-item:not(:last-child) {margin-block-end: 8px;}
+
+.forecast-card .card-item p { 
+  color: var(--on-surface-variant);
+}
 
 
 
