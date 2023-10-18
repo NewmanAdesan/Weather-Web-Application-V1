@@ -236,7 +236,7 @@ sub {vertical-align: baseline;}
   transition: var(--transition-short);
 }
 .has-state:is(:hover, :focus, :focus-visible)::before {background-color: var(--white-alpha-8);}
-.has-state:focus-visible { animation: ripple 250ms ease-in forwards}
+.has-state:is(:focus-visible, :focus) { animation: ripple 250ms ease-in forwards}
 
 @keyframes ripple {
   0% {
@@ -399,6 +399,8 @@ article.container::before {
 }
 
 .header-actions { gap: 8px; }
+
+.header-actions .text { display: none; }
 
 
 /* SEARCH BOX UI: CIRCULAR REVEAL FUNCTIONALITY */
@@ -742,18 +744,24 @@ article.container::before {
   #FOOTER
 \*-----------------------------------*/
 .footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: none;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
   margin-block-start: 24px;
   color: var(--on-surface-variant);
   text-align: center;
 }
 
-.footer p:nth-child(n+2) {
+.fade-in.footer {
   display: flex;
+}
+
+.footer p:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 4px;
 }
@@ -765,3 +773,42 @@ article.container::before {
 /*-----------------------------------*\
   #MEDIA QUERIES
 \*-----------------------------------*/
+
+@media screen and (min-width: 768px) {
+
+    :root {
+    --title-1: 2.4rem;
+    }
+
+    /**
+    * HEADER
+    */
+    .header-actions .text { display: block; }
+
+
+    /**
+    * CONTAINERS
+    */
+    .container { padding-inline: 24px }
+    article.container { grid-template-columns: 300px minmax(0, 1fr); }
+
+
+    /**
+      * HIGHLIGHTS UI
+      */
+    .highlights { margin-top: 0 }
+    .highlights-list { grid-template-columns: 1fr 1fr; }
+    .highlights-card.one, 
+    .highlights-card.two { grid-column: span 2; }
+    .highlights-card.one .card-item {
+      width: 25%;
+      flex-direction: column-reverse;
+      row-gap: 8px;
+    } 
+
+    .slider-container { 
+      margin-inline: 0px; 
+      border-radius: var(--radius-16) 0 0 var(--radius-16);
+    }
+    .slider-list::before { display: none; }
+}
