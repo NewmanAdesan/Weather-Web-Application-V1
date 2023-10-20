@@ -73,7 +73,7 @@
     /**
       * SIZE
       */
-    --header-height: 90px;
+    --header-height: 80px;
 
     
     /**
@@ -276,7 +276,7 @@ sub {vertical-align: baseline;}
 .title-1 { font-size: var(--title-1) }
 .title-2 {
   font-size: var(--title-2);
-  margin-block-end: 16px;
+  margin-block-end: 12px;
 }
 .title-3 { 
   font-size: var(--title-3);
@@ -320,7 +320,8 @@ sub {vertical-align: baseline;}
 }
 
 
-.section:not(:last-child) {margin-bottom: 16px;}
+
+/* REUSED STYLE: CARD UTILITIES */
 
 .card {
   background-color: var(--surface);
@@ -336,45 +337,6 @@ sub {vertical-align: baseline;}
   padding: 16px;
   border-radius: var(--radius-16);
 }
-
-
-
-
-/*-----------------------------------*\
-  #MAIN
-\*-----------------------------------*/
-
-main {
-  height: calc(100vh - 80px);
-  height: calc(100svh - 80px); /* for mobile */
-  overflow: hidden;
-}
-
-article.container {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 20px;
-  height: 100%;
-  overflow-y: overlay;
-  overflow-y: auto;
-}
-
-article.container::-webkit-scrollbar-thumb {background-color: transparent;}
-
-article.container:is(:hover, :focus, :focus-visible)::-webkit-scrollbar-thumb {background-color: var(--white-alpha-8);}
-
-article.container::before {
-  content: "";
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
-  background-image: var(--gradient-1);
-  pointer-events: none;
-}
-
 
 
 
@@ -408,6 +370,7 @@ article.container::before {
   position: fixed;
   inset: 0;
   z-index: 4;
+  width: 100%;
   background-color: var(--surface);
   color: var(--on-surface);
 
@@ -427,7 +390,6 @@ article.container::before {
 /* SEARCH BOX UI: LOADING ICON */
 .search-input-box {
   position: relative;
-  border-bottom: 1px solid var(--outline);
 }
 
 .search-input-box::before {
@@ -465,7 +427,7 @@ article.container::before {
   outline: none;
 }
 
-.search-field::-webkit-search-cancel-button {display: hidden}
+.search-field::-webkit-search-cancel-button {display: none}
 .search-field::placeholder{color: var(--on-surface-variant)}
 
 .search-input-box .leading-icon {
@@ -475,7 +437,13 @@ article.container::before {
   transform: translateY(-50%);
 }
 
-.search-box .search-list { padding-block: 8px 16px; }
+.search-input-box > span.leading-icon {display: hidden;}
+
+.search-box .search-list { 
+  padding-block: 8px 16px; 
+  border-block-start: 1px solid var(--outline);
+  width: 100%;
+}
 
 .search-box .search-item {
   position: relative;
@@ -502,12 +470,54 @@ article.container::before {
 
 
 /*-----------------------------------*\
+  #MAIN
+\*-----------------------------------*/
+
+main {
+  height: calc(100vh - var(--header-height));
+  height: calc(100svh - var(--header-height)); /* for mobile */
+  overflow: hidden;
+}
+
+article.container {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  height: 100%;
+  overflow-y: overlay;
+  overflow-y: auto;
+}
+
+article.container::-webkit-scrollbar-thumb {background-color: transparent;}
+
+article.container:is(:hover, :focus, :focus-visible)::-webkit-scrollbar-thumb {background-color: var(--white-alpha-8);}
+
+article.container::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-image: var(--gradient-1);
+  pointer-events: none;
+}
+
+
+.section:not(:last-child) {margin-bottom: 12px;}
+
+
+
+
+
+
+/*-----------------------------------*\
   #CURRENT WEATHER
 \*-----------------------------------*/
 .current-weather-card .wrapper { 
   display: flex; 
-  align-items: 
-  center; 
+  align-items: center; 
   gap: 8px; 
   margin-bottom: 12px;
 
@@ -560,14 +570,11 @@ article.container::before {
 
 
 
-
 /*-----------------------------------*\
   #HIGHLIGHTS
 \*-----------------------------------*/
 
 .highlights .m-icon { font-size: 3.2rem;}
-
-.highlights { margin-top: 16px }
 
 .highlights-list {
   display: grid;
@@ -623,7 +630,7 @@ article.container::before {
 .highlights-card.two .card-item {
   justify-content: flex-start;
   flex-wrap: wrap;
-  column-gap: 8px;
+  column-gap: 12px;
   row-gap: 16px;
 }
 
@@ -645,11 +652,11 @@ article.container::before {
 
 :is(.slider-list, .slider-card) {
   display: flex;
-  gap: 8px;
+  gap: 12px;
 }
 
 .slider-list:first-child {
-  margin-block-end: 8px;
+  margin-block-end: 16px;
 }
 
 .slider-list::before,
@@ -776,39 +783,168 @@ article.container::before {
 
 @media screen and (min-width: 768px) {
 
+    /**
+    * VARIABLES & UTILITIES
+    */
+
     :root {
-    --title-1: 2.4rem;
+    --title-1: 2.6rem;
+    --header-height: 96px;
     }
+    .title-2 { margin-block-end: 16px;; }
+    .card-sm { padding: 20px; }
+    .card-lg { padding: 24px; }
+
 
     /**
     * HEADER
     */
     .header-actions .text { display: block; }
+    .header-actions { gap: 16px; }
+    .header .btn-primary { padding-inline: 16px;}
+
 
 
     /**
     * CONTAINERS
     */
-    .container { padding-inline: 24px }
-    article.container { grid-template-columns: 300px minmax(0, 1fr); }
+    .container { padding: 24px }
+    article.container { 
+      grid-template-columns: 300px minmax(0, 1fr); 
+      align-items: flex-start;
+      gap: 24px;
+    }
+    article.container .content-left {
+      position: sticky;
+      top: 0;
+    }
+    .section:not(:last-child) {margin-block-end: 16px;}
+
+
+
+    /**
+    * CONTAINERS
+    */
+    .forecast-card .card-item:not(:last-child) {margin-block-end: 16px;}
 
 
     /**
       * HIGHLIGHTS UI
       */
     .highlights { margin-top: 0 }
+    .highlights .m-icon {font-size: 3.6rem}
     .highlights-list { grid-template-columns: 1fr 1fr; }
-    .highlights-card.one, 
-    .highlights-card.two { grid-column: span 2; }
+    .highlights-card:nth-child(-n+2) {grid-column: span 2; height: 160px;}
+    .highlights-card:nth-child(n+3) {height: 120px}
     .highlights-card.one .card-item {
       width: 25%;
       flex-direction: column-reverse;
       row-gap: 8px;
     } 
+    .highlights .badge {
+      top: 20px;
+      right: 20px;
+    }
 
+
+    /**
+      * HOURLY FORECAST UI
+      */
     .slider-container { 
       margin-inline: 0px; 
       border-radius: var(--radius-16) 0 0 var(--radius-16);
     }
     .slider-list::before { display: none; }
+    .slider-list::after { min-width: 12px; }
+}
+
+
+
+
+@media screen and (min-width: 1200px) {
+
+  /**
+  * VARIABLES & UTILITIES
+  */
+  :root {
+    --header-height: 110px;
+    --heading: 8rem;
+    --title-1: 3.6rem;
+    --title-2: 2rem;
+  }
+  .card-lg { padding: 36px; }
+  .card-sm { padding: 28px; }
+  
+
+  /**
+  * HEADER
+  */
+  .header {
+    height: var(--header-height);
+  }
+  
+  article.container { 
+    padding: 25px;
+    grid-template-columns: 360px minmax(0, 1fr);
+  }
+  .header .container {
+    padding: 0 16px;
+    height: 100%;
+  }
+  .header .logo img {width: 200px}
+  .search-box .search-list {display: none}
+  :is(.search-box, .search-box.active) {
+    all: unset;
+    position: relative;
+    width: 500px;
+    border-radius: var(--radius-28);
+    background-color: var(--surface);
+  }
+  .search-box:hover,
+  .search-box.active:hover {box-shadow: var(--shadow-1);}
+  .search-box:focus-within,
+  .search-box.active:focus-within,
+  .search-box:focus-within .search-list.active:focus-within {box-shadow: var(--shadow-2);}
+  .search-input-box > button.leading-icon {display: none;}
+  .search-input-box > span.leading-icon { 
+    display: block;
+    transform: translateY(-50%) translateX(50%);
+  }
+  .search-field {
+    height: 45px;
+    line-height: 45px;
+    margin-inline-start: 48px;
+  }
+  .search-box:focus-within:has(.search-list.active) { border-radius: var(--radius-28) var(--radius-28) 0 0;}
+  .search-box:focus-within .search-list.active {
+    position: absolute; 
+    top: 100%;
+    display: block;
+    z-index: 1;
+    max-height: 240px;
+    overflow: auto; /* for firefox browsers */
+    overflow: overlay;
+    background-color: var(--surface);
+    box-shadow: var(--shadow-1);
+    border-radius: 0 0 var(--radius-28) var(--radius-28);
+  }
+  .search-box .search-list:empty {min-height: 120px;}
+  .search-box .search-list::-webkit-scrollbar-button {height: 20px;}
+  .header-actions .icon-btn {display: none}
+
+
+    /**
+    * HIGHLIGHTS UI
+    */
+    .highlights .m-icon {font-size: 4rem}
+    .highlights-card:nth-child(-n+2) { height: 180px; }
+    .highlights-card:nth-child(n+3) { height: 150px }
+    .highlights .badge {
+      top: 28px;
+      right: 28px;
+      padding: 4px 16px;
+    }
+
+
+
 }
