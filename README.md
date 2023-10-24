@@ -146,19 +146,21 @@ Besides basic Air Quality Index, the API returns data about polluting gases, suc
 
 <br></br>
 
-GEOCODING REQUEST
+DIRECT GEOCODING REQUEST
 ```
 DIRECT GEOCODING
 http://api.openweathermap.org/geo/1.0/direct?q={CITY_NAME}&limit={LIMIT}&appid={API_KEY}
 
 
 REVERSE GEOCODING
-http://api.openweathermap.org/geo/1.0/reverse?lat={LATITUDE}&lon=-0.1180&limit=5&appid={API key}
+http://api.openweathermap.org/geo/1.0/reverse?lat={LATITUDE}&lon={LONGITUDE}&limit=5&appid={API key}
 ```
 
 Geocoding is the process of transformation of any location name into geographical coordinates, and the other way around (reverse geocoding).
 
 If you use the limit parameter in the API call, you can cap how many locations with the same name will be seen in the API response.
+
+The Direct Geocoding API and the Reverse Geocoding API returns a list of locations correponding to the seach query. each object in the list have the properties below
 
 | Field                 | Description                                                             | Data Type  | Sample Data                                       |
 |-----------------------|-------------------------------------------------------------------------|------------|---------------------------------------------------|
@@ -169,6 +171,9 @@ If you use the limit parameter in the API call, you can cap how many locations w
 | lon                   | Longitude of the found location                                         | Number     | -0.1276474                                       |
 | country               | Country of the found location                                           | String     | GB (United Kingdom)                              |
 | state (where available)| State or region of the found location (if available)                   | String     | England                                           |
+
+
+
 
 
 

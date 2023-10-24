@@ -430,14 +430,14 @@ sub {vertical-align: baseline;}
 .search-field::-webkit-search-cancel-button {display: none}
 .search-field::placeholder{color: var(--on-surface-variant)}
 
+.search-input-box > span.leading-icon {display: none;}
+
 .search-input-box .leading-icon {
   position: absolute;
   background-color: transparent;
   top: 50%;
   transform: translateY(-50%);
 }
-
-.search-input-box > span.leading-icon {display: hidden;}
 
 .search-box .search-list { 
   padding-block: 8px 16px; 

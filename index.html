@@ -40,6 +40,8 @@
         <!--
             - EXTERNAL SCRIPT
         -->
+        <script src="./assets/js/app.js" type="module"></script>
+        <script src="./assets/js/route.js" type="module"></script>
     </head>
 
     <body>
@@ -48,22 +50,22 @@
                 <!--LOGO-->
                 <a href="#" class="logo"><img src="./assets/images/logo.png" width="364" height="58" alt="logo"></a>
                 <!--SEARCH BOX-->
-                <div class="search-box">
+                <div class="search-box" data-search-box>
                     <!--SEARCH INPUT-->
                     <div class="search-input-box">
-                        <button class="icon-btn leading-icon has-state" aria-label="close search"><span class="m-icon">arrow_back</span></button>
-                        <span class="m-icon leading-icon">search</span>
-                        <input type="search" name="search" autocomplete="off" placeholder="Search city..." class="search-field">
+                        <button class="icon-btn leading-icon has-state" aria-label="close search" data-search-toggler><span class="m-icon">arrow_back</span></button>
+                        <span class="m-icon leading-icon search-icon">search</span>
+                        <input type="search" name="search" autocomplete="off" placeholder="Search city..." class="search-field" data-search-field>
                     </div>
                     <!--SEARCH RESULT-->
-                    <ul class="search-list">
+                    <ul class="search-list" data-search-list>
                         <li class="search-item has-state">
                             <span class="m-icon">location_on</span>
                             <div>
                                 <span class="title">London</span>
                                 <span class="label-2 subtitle">State of London, GB</span>
                             </div>
-                            <a href="#" class="item-link has-state"></a>
+                            <a href="#" class="item-link has-state" data-search-toggler></a>
                         </li>
                         <li class="search-item has-state">
                             <span class="m-icon">location_on</span>
@@ -71,7 +73,7 @@
                                 <span class="title">London</span>
                                 <span class="label-2 subtitle">State of London, GB</span>
                             </div>
-                            <a href="#" class="item-link has-state"></a>
+                            <a href="#" class="item-link has-state" data-search-toggler></a>
                         </li>
                         <li class="search-item has-state">
                             <span class="m-icon">location_on</span>
@@ -79,7 +81,7 @@
                                 <span class="title">London</span>
                                 <span class="label-2 subtitle">State of London, GB</span>
                             </div>
-                            <a href="#" class="item-link has-state"></a>                            
+                            <a href="#" class="item-link has-state" data-search-toggler></a>                            
                         </li>
                         <li class="search-item has-state">
                             <span class="m-icon">location_on</span>
@@ -87,7 +89,7 @@
                                 <span class="title">London</span>
                                 <span class="label-2 subtitle">State of London, GB</span>
                             </div>
-                            <a href="#" class="item-link has-state"></a>
+                            <a href="#" class="item-link has-state" data-search-toggler></a>
                         </li>
                         <li class="search-item has-state">
                             <span class="m-icon">location_on</span>
@@ -95,46 +97,14 @@
                                 <span class="title">London</span>
                                 <span class="label-2 subtitle">State of London, GB</span>
                             </div>
-                            <a href="#" class="item-link has-state"></a>
-                        </li>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state"></a>                            
-                        </li>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state"></a>
-                        </li>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state"></a>
-                        </li>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state"></a>                            
+                            <a href="#" class="item-link has-state" data-search-toggler></a>
                         </li>
                     </ul>
                 </div>
                 <!--HEADER ACTIONS-->
                 <div class="header-actions">
                     <!--SEARCH BUTTON-->
-                    <button class="icon-btn has-state">
+                    <button class="icon-btn has-state" data-search-toggler>
                         <span class="m-icon">search</span>
                     </button>
                     <!--CURRENT LOCATION BUTTON-->
@@ -405,8 +375,5 @@
             <p class="title-3">Page not found!</p>
             <a href="#" class="label-1 aqi-5">Go Home</a>
         </section>
-
-
-        
     </body>
 </html>
