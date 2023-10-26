@@ -52,53 +52,13 @@
                 <!--SEARCH BOX-->
                 <div class="search-box" data-search-box>
                     <!--SEARCH INPUT-->
-                    <div class="search-input-box">
+                    <div class="search-input-box" data-search-input>
                         <button class="icon-btn leading-icon has-state" aria-label="close search" data-search-toggler><span class="m-icon">arrow_back</span></button>
                         <span class="m-icon leading-icon search-icon">search</span>
                         <input type="search" name="search" autocomplete="off" placeholder="Search city..." class="search-field" data-search-field>
                     </div>
                     <!--SEARCH RESULT-->
                     <ul class="search-list" data-search-list>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state" data-search-toggler></a>
-                        </li>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state" data-search-toggler></a>
-                        </li>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state" data-search-toggler></a>                            
-                        </li>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state" data-search-toggler></a>
-                        </li>
-                        <li class="search-item has-state">
-                            <span class="m-icon">location_on</span>
-                            <div>
-                                <span class="title">London</span>
-                                <span class="label-2 subtitle">State of London, GB</span>
-                            </div>
-                            <a href="#" class="item-link has-state" data-search-toggler></a>
-                        </li>
                     </ul>
                 </div>
                 <!--HEADER ACTIONS-->
@@ -108,7 +68,7 @@
                         <span class="m-icon">search</span>
                     </button>
                     <!--CURRENT LOCATION BUTTON-->
-                    <a href="#/current-location" class="btn-primary has-state">
+                    <a href="#/current-location" class="btn-primary has-state" data-current-location>
                         <span class="m-icon">my_location</span>
                         <span class="text">Current Location</span>
                     </a>
@@ -120,7 +80,7 @@
             <article class="container">
                 <!--RIGHT SECTIONS-->
                 <div class="content-left">
-                    <section class="section" aria-label="current-weather">
+                    <section class="section" aria-label="current-weather" data-current-weather>
                         <div class="card card-lg current-weather-card">
                             <h2 class="title-2">Now</h2>
                             <div class="wrapper">
@@ -140,7 +100,7 @@
                             </ul>
                         </div>
                     </section>
-                    <section class="section forecast" aria-labelledby="5 Days Forecast">
+                    <section class="section forecast" aria-labelledby="5 Days Forecast" data-forecast>
                         <h2 class="title-2">5 Days Forecast</h2>
                         <div class="card card-lg forecast-card">
                             <ul>
@@ -190,7 +150,7 @@
                 </div>
                 <!--LEFT SECTIONS-->
                 <div class="content-right">
-                    <section class="section highlights" aria-labelledby="Todays Highlights">
+                    <section class="section highlights" aria-labelledby="Todays Highlights" data-highlights>
                         <div class="card card-lg">
                             <h2 class="title-2">Todays Highlights</h2>
                             <div class="highlights-list">
@@ -269,7 +229,7 @@
                             </div>
                         </div>
                     </section>
-                    <section class="section hourly-forecast" aria-label="Hourly Forecast">
+                    <section class="section hourly-forecast" aria-label="Hourly Forecast" data-hourly-forecast>
                         <h2 class="title-2">Today at</h2>
                         <div class="slider-container">
                             <div class="slider-list">
@@ -358,7 +318,7 @@
                             </div>
                         </div>
                     </section>
-                    <footer class="footer fade-in label-1">
+                    <footer class="footer label-1">
                         <p>Copyright 2023 codewithsadee. All Rights Reserved</p>
                         <p>Powered by <img src="./assets/images/openweather.png" alt="Open Weather" width="120" height="25"></p>
                     </footer>

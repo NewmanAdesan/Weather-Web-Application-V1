@@ -77,10 +77,10 @@ api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid={{open-weathe
 | cod             | The response code indicating the request's status      | String     | "200"                                             |
 | message         | A message associated with the response code             | Number     | 0                                                 |
 | cnt             | The total number of data points in the "list" array    | Number     | 40                                                |
-| list            | An array of weather information for each day           | Array      | - (see below for daily weather data structure)     |
+| list            | An array of weather information in a 3-hour step for each day           | Array      | - (see below for daily weather data structure)     |
 | city            | Information about the city where weather data is from  | Object     | - (see below for city data structure)              |
 
-Each daily weather data entry in the "list" array has the following structure:
+Each weather data entry in the "list" array has the following structure:
 
 | Field                       | Description                                             | Data Type  | Sample Data                                  |
 |-----------------------------|---------------------------------------------------------|------------|----------------------------------------------|
@@ -103,8 +103,15 @@ Each daily weather data entry in the "list" array has the following structure:
 | wind (object)               | - `wind_speed`: Wind speed in meters per second         | Number     | 0.62                                         |
 |                             | - `wind_deg`: Wind direction in degrees                 | Number     | 349                                          |
 |                             | - `wind_gust`: Wind gust speed in meters per second      | Number     | 1.18                                         |
-| rain (object)               | - `rain_3h`: Rainfall amount for the last 3 hours in mm | Number     | 0.26                                         |
-| sys (object)                | - `sys_pod`: Part of the day ("d" for day, "n" for night)| String     | "d"                                          |
+| rain (object)               | - `3h`: Rainfall amount for the last 3 hours in mm | Number     | 0.26                                         |
+| sys (object)                | - `pod`: Part of the day ("d" for day, "n" for night)| String     | "d"                                          |
+
+
+
+The City Object data structure has the following properties
+
+| Field                       | Description                                             | Data Type  | Sample Data                                  |
+|-----------------------------|---------------------------------------------------------|------------|----------------------------------------------|
 | city (object)               | - `city_id`: Unique identifier for the city              | Number     | 3163858                                      |
 |                             | - `city_name`: Name of the city                           | String     | "Zocca"                                     |
 |                             | - `city_coord_lat`: Latitude of the city                  | Number     | 44.34                                        |
