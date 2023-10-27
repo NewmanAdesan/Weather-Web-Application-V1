@@ -184,27 +184,32 @@ export function updateWeather(lat, lon) {
     let forecastSection = document.querySelector("[data-forecast]");
     let hourlyForecastSection = document.querySelector("[data-hourly-forecast]");
 
-    // currentWeatherSection.innerHTML = "";
-    // highlightSection.innerHTML = "";
-    // forecastSection.innerHTML = "";
-    // hourlyForecastSection.innerHTML = "";
+    currentWeatherSection.innerHTML = "";
+    highlightSection.innerHTML = "";
+    forecastSection.innerHTML = "";
+    hourlyForecastSection.innerHTML = "";
 
     fetchDataFromServer(url.currentWeather(lat, lon), function(data){
         console.log(data);
-        const {main:{temp}, weather:[{description, icon}], dt, timezone, name:state, sys:{country}} = data;
+        const {main, weather, dt, timezone, name:state, sys, visibility} = data;
+        const {temp, feels_like, humidity, pressure} = main;
+        const [{description, icon}] = weather;
+        const {country, sunrise:sunriseUnix, sunset:sunsetUnix} = sys;
+
+
         const currentWeatherUI = document.createElement("div");
         currentWeatherUI.classList.add("card", "card-lg", "current-weather-card");
         currentWeatherUI.innerHTML = `
             <h2 class="title-2">Now</h2>
             <div class="wrapper">
-                <p class="heading">${temp}&deg;<sup>c</sup></p>
+                <p class="heading">${parseInt(temp)}&deg;<sup>c</sup></p>
                 <img src="./assets/images/weather_icons/${icon}.png" width="64" height="64" alt="${description}" class="weather-icon">
             </div>
             <span class="body-3">${description}</span>
             <ul class="meta-list">
                 <li class="meta-item">
                     <span class="m-icon">calendar_today</span>
-                    <span class="title-3 meta-text">${module.getDate(unix, timezone)}</span>
+                    <span class="title-3 meta-text">${module.getDate(dt, timezone)}</span>
                 </li>
                 <li class="meta-item">
                     <span class="m-icon">location_on</span>
@@ -213,24 +218,108 @@ export function updateWeather(lat, lon) {
             </ul>
         `
         currentWeatherSection.appendChild(currentWeatherUI);
-
-    })
     
 
+        /**
+         * HIGHLIGHTS UI
+         * 1) this would be in the callback of the current weather UI because we are going to use some data from the current weather api
+         * 2) fetch data using the openweather air pollution URL
+         * 2a) create a function airPollution(lat, lon) that returns the URL
+         * 2b) create a data structure "aqiText" that associates the air quality index (1-5) with a particular tag & message
+         * 2c) create a funtion getTime that transforms time format from "1605182400" --> "6:30 AM"
+         * 2d) utilize the airPollution funtion and destructure the needed data.
+         * 3) create the HighlightsUI dom element & dynamically render its inner html
+         * 3a) during render, utilize the aqiText data structure for the Air Quality Badge
+         * 3b) during render, utilize the getTime function for the sunrise & sunset times
+         * 3c) add the HighlightsUI to the dom.
+         */
+        fetchDataFromServer(url.airPollution(lat, lon), function(data){
+            const {list: [{main:{aqi}, components}]} = data;
+            const {pm2_5, so2, no2, o3} = components;
 
-    /**
-     * HIGHLIGHTS UI
-     * 1) this would be in the callback of the current weather UI because we are going to use some data from the current weather api
-     * 2) fetch data using the openweather air pollution URL
-     * 2a) create a function airPollution(lat, lon) that returns the URL
-     * 2b) create a data structure "aqiText" that associates the air quality index (1-5) with a particular tag & message
-     * 2c) create a funtion getTime that transforms time format from "1605182400" --> "6:30 AM"
-     * 2d) utilize the airPollution funtion and destructure the needed data.
-     * 3) create the currentWeatherUI dom element & dynamically render its inner html
-     * 3a) during render, utilize the aqiText data structure for the Air Quality Badge
-     * 3b) during render, utilize the getTime function for the sunrise & sunset times
-     * 3c) add the currentWeatherUI to the dom.
-     */
+            const HighlightsUI = document.createElement("div");
+            HighlightsUI.classList.add("card", "card-lg");
+            HighlightsUI.innerHTML = `
+                <h2 class="title-2">Todays Highlights</h2>
+                <div class="highlights-list">
+                    <div class="card card-sm highlights-card one">
+                        <h3 class="title-3">Air Quality Index</h3>
+                        <div class="wrapper">
+                            <span class="m-icon">air</span>
+                            <ul class="card-list" >
+                                <li class="card-item">
+                                    <p class="title-1">${pm2_5.toPrecision(3)}</p> 
+                                    <p class="label-1">PM<sub>2.5</sub></p>
+                                </li>
+                                <li class="card-item">
+                                    <p class="title-1">${so2.toPrecision(3)}</p> 
+                                    <p class="label-1">SO<sub>2</sub></p>
+                                </li>
+                                <li class="card-item">
+                                    <p class="title-1">${no2.toPrecision(3)}</p> 
+                                    <p class="label-1">NO<sub>2</sub></p>
+                                </li>
+                                <li class="card-item">
+                                    <p class="title-1">${o3.toPrecision(3)}</p> 
+                                    <p class="label-1">O<sub>3</sub></p>
+                            </li>
+                            </ul>
+                        </div>
+                        <span class="badge aqi-${aqi} label-1" title="${module.aqiText[aqi].message}">${module.aqiText[aqi].tag}</span>
+                    </div>
+                    <div class="card card-sm highlights-card two">
+                        <h3 class="title-3">Sunrise & Sunset</h3>
+                        <div class="card-list">
+                            <div class="card-item">
+                                <span class="m-icon">clear_day</span>
+                                <div>
+                                    <p class="label-1">Sunrise</p>
+                                    <p class="title-1">${module.getTime(sunriseUnix, timezone)}</p>
+                                </div>
+                            </div>
+                            <div class="card-item">
+                                <span class="m-icon">clear_night</span>
+                                <div>
+                                    <p class="label-1">Sunset</p>
+                                    <p class="title-1">${module.getTime(sunsetUnix, timezone)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-sm highlights-card">
+                        <h3 class="title-3">Humidity</h3>
+                        <div class="wrapper">
+                            <span class="m-icon">humidity_percentage</span>
+                            <span class="title-1">${humidity}%</span>
+                        </div>
+                    </div>
+                    <div class="card card-sm highlights-card">
+                        <h3 class="title-3">Pressure</h3>
+                        <div class="wrapper">
+                            <span class="m-icon">airwave</span>
+                            <span class="title-1">${pressure}hPa</span>
+                        </div>
+                    </div>
+                    <div class="card card-sm highlights-card">
+                        <h3 class="title-3">Visibility</h3>
+                        <div class="wrapper">
+                            <span class="m-icon">visibility</span>
+                            <span class="title-1">${visibility/1000}km</span>
+                        </div>
+                    </div>
+                    <div class="card card-sm highlights-card">
+                        <h3 class="title-3">Feels Like</h3>
+                        <div class="wrapper">
+                            <span class="m-icon">thermostat</span>
+                            <span class="title-1">${parseInt(feels_like)}&deg;c</span>
+                        </div>
+                    </div>
+                </div>
+            `
+            highlightSection.appendChild(HighlightsUI);
+        })
+
+    })
 
 
     /**
@@ -265,8 +354,9 @@ export function updateWeather(lat, lon) {
      * DATA LOADING ICON
      * 1) at the start of the update weather function, the loading icon will become visible
      * 2) at the end of the update weather function, the loading icon will become invisible
-     * 3) if there was an error fetching a data information (in the fetch promise) the Error404(type, payload) function is called
-     * 3a) the Error404 function is called with the type "fetchingError" and the payload {apiURL}
+     * 3) if there was an error fetching a data information (in the fetchDataFromServer function) the Error404(type, payload) function is called
+     * 3a) the Error404 function is called with the type "fetchingError" and the payload {lat, lon}
+     * 3b) in the fetchDataFromServer(apiURL, callback) function the lat & lon will be obtained from the apiURL for the purpose of serving it to the error function
      * 3b) the Error Modal shows 404, "Data Fetching Error", reload button
      * 3c) on click of the reload button calls the updateWeather(lat, lon) function once again with the lat & lon gotten from the apiURL
      * 3d) the loading icon will become invisible
@@ -276,16 +366,39 @@ export function updateWeather(lat, lon) {
     /**
      * THE ERROR404 FUNCTION
      * 1) this function has two parameters "type" and payload
-     * 1a) for now it support two types "fetchingError" and "pageNotFound"
-     * 1b) type "fetchingError" would have the payload {apiURL}, type "pageNotFound" would have the payload {lat, lon}
-     * 2) using a switch case, for type "fetchingError", 
-     * 2a) the Error Modal element shows 404, "Data Fetching Error", reload button
+     * 1a) for now it support three types "fetchingError", "pageNotFound" and "geolocationError". we would use a switch case to deal with each type
+     * 1b) type "fetchingError" would have the payload {apiURL}, type "pageNotFound" & type "geolocationError" would have the payload {lat, lon}
+     * 2) for type "fetchingError", 
+     * 2a) the Error Modal element shows 404, "Data Fetching Error", "Reload" button
      * 2b) on click of the reload button; the Error Modal will become invisible & the updateWeather(lat, lon) function once again will be called with the lat & lon gotten from the apiURL
      * 2c) the loading icon will become invisible
-     * 2d) the Error Modal will become visible
+     * 2d) the Error Modal will become invisible
+     * 3) for type "pageNotFound",
+     * 3a) the Error Modal element shows 404, "Page not found!", "Go Home" button
+     * 3b) the loading icon will become invisible
+     * 3c) the Error Modal will become invisible
+     * 3d) on click of the "Go Home" button; the Error Modal will become invisible & the updatWeather(lat, lon) function will be called with the lat & lon gotten from the pay load
+     * 4) for type "geolocationError",
+     * 4a) the Error Modal element shows 404, "User Location Fetching Error", "Go Home" button
+     * 4b) the loading icon will become invisible
+     * 4c) the Error Modal will become invisible
+     * 4d) on click of the "Go Home" button; the Error Modal will become invisible & the updatWeather(lat, lon) function will be called with the lat & lon gotten from the pay load
+     * 
      */
 
     /**
      * SINGLE PAGE APPLICATION FUNCTIONALITY
+     * 1) on window load event or on window hash change event, we are going to check the location hash of the browser & process it. this processing will be encapsulate in a function called "checkhash"
+     * 2) on window load event, if there is not window location hash, we would set the hash to a default location "#/weather?lat=10.99&lon=44.34" (we will use london location sha)
+     * 3) the chechHash function implementation
+     * 3a) our application only support two type of hash "#/weather?lat={latitude}&lon={longitude}" & "#/current-location"
+     * 3b) obtain the window hash location, and utilize the regular expression technique to deal with each type, 
+     * 3bi) if the hash conform to "#/weather?lat={latitude}&lon={longitude}", extract out the latitude & longitude & call the updateWeather function
+     * 3bii) if the hash conform to "#/current-location", get the geo-location of the user & call the updateWeather function with users location
+     * 3biia) if user browser does not support geolocation call the Error404 function -- Error404("geolocationError", lat, lon)
+     * 3biib) if there was an error fetching user geolocation call the Error404 function -- Error404("geolocationError", lat, lon)
+     * 3biii) if the hash does not conform to any of the two, call the Error404 function -- Error404("pageNotFound", lat, lon)
+     * 
+     * 
      */
 }
