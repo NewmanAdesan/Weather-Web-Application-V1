@@ -225,7 +225,7 @@ sub {vertical-align: baseline;}
 
 /* REUSED STYLE: HIGHLIGHT & CICULAR REVEAL FEATURE */
 .has-state { position: relative;}
-.has-state:hover {box-shadow: var(--shadow-1); background-color: var(--white-alpha-4);}
+.has-state:hover {box-shadow: var(--shadow-1);}
 .has-state:is(:focus , :focus-visible) {box-shadow: none;}
 .has-state::before {
   content: "";
@@ -235,6 +235,7 @@ sub {vertical-align: baseline;}
   clip-path: circle(100% at 50% 50%);
   transition: var(--transition-short);
 }
+.has-state:hover::before {background-color: var(--white-alpha-4);}
 .has-state:is(:focus, :focus-visible)::before {
   background-color: var(--white-alpha-8);
   animation: ripple 200ms ease-in forwards

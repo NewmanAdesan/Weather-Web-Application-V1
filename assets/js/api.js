@@ -15,7 +15,7 @@
 function fetchDataFromServer(apiURL, callback){
     fetch(apiURL)
         .then(res => res.json())
-        .then(data => callback(data));
+        .then(data => callback(data))
 }
 
 
@@ -23,7 +23,7 @@ const API_KEY = "6a9fbc7552e30ab38a9f548a29db1601";
 const LIMIT = 5;
 const url = {
     currentWeather(lat, lon) {
-        return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+        return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
     },
 
     geo(querry) {

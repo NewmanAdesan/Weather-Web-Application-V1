@@ -27,7 +27,7 @@ Insert gif or link to demo
 
 CURRENT WEATHER REQUEST
 ```
-https://api.openweathermap.org/data/2.5/weather?lat={LATITUDE}&lon={LONGITUDE}&appid={API_KEY}
+https://api.openweathermap.org/data/2.5/weather?lat={LATITUDE}&lon={LONGITUDE}&units=metric&appid={API_KEY}
 ```
 | Field                    | Description                                             | Data Type  | Sample Data                                  |
 |--------------------------|---------------------------------------------------------|------------|----------------------------------------------|
