@@ -32,7 +32,12 @@ const url = {
 
     airPollution(lat, lon) {
         return `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+    },
+
+    forecast(lat, lon) {
+        return `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
     }
+
 }
 
 

@@ -54,23 +54,23 @@ addEventOnElements(searchTogglers, "click", toggleSearch);
 /**
  * SEARCH INTEGRATION
  * 
- * 1) on search field change, loading icon becomes active
- * 2) search box data is fetch from an api if search field has a value
- * 2a) create a function fetchDataFromServer(api_url, callback)
- * 2b) create a function that returns the api url for search box data
- * 2c) use the two functions to fetch search box data
- * 2d) when data is received, set the loading icon inactive 
- * 3) render the seach box UI dynamically using the data fetched
- * 3a) create search-item UI for each location and append to the data-search-list element
- * 3b) on each search-item UI link place on click event which toggles the seach bar
- * 4) implement a timeout feature (when there is an input change, fetching does not happen until some miliseconds later)
- * 4a) create two variables searchTimeout & searchTimeoutDuration set to "null" & "500"
- * 4b) on input change, clear the searchTimeout
- * 4c) encapsulate the seach box fetching logic inside a timeout giving its ID to the searchTimeout variable
- * 5) deal with edge case when input change, there is no value in the input field.
- * 5a) the loading icon is set to inactive
- * 5b) the search list UI is set to inactive
- * 5c) the search box becomes inactive
+ * 1) Activated the loading icon when the search field changes.
+ * 2) Implemented fetching of search box data from an API when the search field has a value.
+ *       - Created a `fetchDataFromServer(api_url, callback)` function.
+ *       - Designed a function to generate the API URL for search box data.
+ *       - Utilized both functions to fetch and process the data.
+ *       - Deactivated the loading icon when data is received.
+ * 3) Dynamically rendered the search box UI using the fetched data.
+ *       - Created a search-item UI for each location and appended it to the `data-search-list` element.
+ *       - Added an onclick event to each search-item UI link for toggling the search bar.
+ * 4) Introduced a timeout feature to delay data fetching on input change.
+ *       - Created two variables, `searchTimeout` and `searchTimeoutDuration`, initialized to "null" and "500" respectively.
+ *       - Cleared the `searchTimeout` on input change.
+ *       - Encapsulated the search box fetching logic inside a timeout, assigning its ID to the `searchTimeout` variable.
+ * 5) Handled edge cases when there is no value in the input field.
+ *       - Deactivated the loading icon.
+ *       - Set the search list UI to an inactive state.
+ *       - Made the search box inactive.
  * 
  */
 let searchTimeout = null;
@@ -169,15 +169,16 @@ export function updateWeather(lat, lon) {
 
     /**
      * CURRENT WEATHER UI
-     * 1) get the section element of all the UI and set their inner html to nothing ("")
-     * 2) fetch data using the current-weather api for the current weather UI 
-     * 2a) create the function currentWeather(lat, lon) this returns the current-weather api url
-     * 2b) fetch data using the fetchDataFromServer & currentWeather function 
-     * 2c) destucture the data needed
-     * 2d) create the currentWeatherUI dom element & dynamically render its inner html
-     * 2e) during dynamic rendering utilize the function getDate(unix, timezome) to transform the time format "1605182400" to "Thursday 16, Feb"
-     * 2f) during dynamic rendering utilize the function reverseGeo(lat, lon) to get the cityname corresponding to the position
-     * 2g) append the currentWeatherUI dom element to the element with the attribute "data-current-weather"
+     *
+     * 1) Cleared the inner HTML of relevant section elements to prepare for updates.
+     * 2) Implemented data retrieval for the current weather UI using the current-weather API.
+     *      - Created the `currentWeather(lat, lon)` function to generate the API URL.
+     *      - Utilized the `fetchDataFromServer` and `currentWeather` functions to fetch and process the necessary data.
+     *      - Destructured the data required for display.
+     * 3) Created the `currentWeatherUI` DOM element and dynamically rendered its content.
+     *      - Utilized the `getDate(unix, timezone)` function to format time data from "1605182400" to "Thursday 16, Feb."
+     *      - Employed the `reverseGeo(lat, lon)` function to obtain the corresponding city name.
+     * 4) Appended the `currentWeatherUI` DOM element to the target element with the "data-current-weather" attribute.
      */
     let currentWeatherSection = document.querySelector("[data-current-weather]");
     let highlightSection = document.querySelector("[data-highlights]");
@@ -222,16 +223,16 @@ export function updateWeather(lat, lon) {
 
         /**
          * HIGHLIGHTS UI
-         * 1) this would be in the callback of the current weather UI because we are going to use some data from the current weather api
-         * 2) fetch data using the openweather air pollution URL
-         * 2a) create a function airPollution(lat, lon) that returns the URL
-         * 2b) create a data structure "aqiText" that associates the air quality index (1-5) with a particular tag & message
-         * 2c) create a funtion getTime that transforms time format from "1605182400" --> "6:30 AM"
-         * 2d) utilize the airPollution funtion and destructure the needed data.
-         * 3) create the HighlightsUI dom element & dynamically render its inner html
-         * 3a) during render, utilize the aqiText data structure for the Air Quality Badge
-         * 3b) during render, utilize the getTime function for the sunrise & sunset times
-         * 3c) add the HighlightsUI to the dom.
+         * 1) Integrated into the callback of the Current Weather UI for data synergy.
+         * 2) Fetched air pollution data from the OpenWeather air pollution API.
+         *      - Created the `airPollution(lat, lon)` function to generate the API URL.
+         *      - Established the `aqiText` data structure to associate air quality index with tags and messages.
+         *      - Designed the `getTime` function for time format conversion ('1605182400' to '6:30 AM').
+         *      - Utilized the `airPollution` function to fetch and destructure necessary data.
+         * 3)  Constructed the `HighlightsUI` DOM element and dynamically rendered its inner HTML.      
+         *      - Leveraged the `aqiText` data structure for the Air Quality Badge.
+         *      - Utilized the `getTime` function for sunrise and sunset times.
+         * 4) Added the `HighlightsUI` to the DOM.
          */
         fetchDataFromServer(url.airPollution(lat, lon), function(data){
             const {list: [{main:{aqi}, components}]} = data;
@@ -324,9 +325,9 @@ export function updateWeather(lat, lon) {
 
     /**
      * HOURLY FORECAST UI
-     * research in the documentation how this forecast UI works
      * 1) fetch data using the openweather forecast URL 
      * 1a) create a function forecast(lat, lon) that returns the forecast URL
+     * 1b) utilize the forecast function to fetch the data 
      * 2) destructure the data needed; the number of data points(cnt) & the list of weather infor for each data point
      * 3) dynamically render the HoulyForecastUI
      * 3a) create the HoulyForecastUI dom element 
@@ -336,7 +337,40 @@ export function updateWeather(lat, lon) {
      * 3d) for the wind-card research & use the value of the wind direction to rotate the direction.png in the right direction
      * 3e) for the wind-card create a mps_kmh(mps) that would convert metre per second to kilometer per hour
      */
+    fetchDataFromServer(url.forecast(lat, lon), function(data){
+        const {cnt: dataPoints, list:forecastList, city: {timezone}} = data;
+        hourlyForecastSection.innerHTML = `
+        <h2 class="title-2">Today at</h2>
+        <div class="slider-container">
+            <div class="slider-list" data-temp-list>
+            </div>
+            <div class="slider-list" data-wind-list>
+            </div>
+        </div>
+        
+        `
+        for (let i=0; i<8; i++) {
+            const {dt, main:{temp}, weather:[{description, icon}], wind:{speed, deg}} = forecastList[i];
 
+            const tempCardUI = document.createElement("div");
+            tempCardUI.classList.add("card", "card-sm", "slider-card");
+            tempCardUI.innerHTML = `
+                <p class="body-3">${module.getHour(dt, timezone)}</p>
+                <img src="./assets/images/weather_icons/${icon}.png" width="48" height="48" loading="lazy" alt="${description}" title="${description}">
+                <p class="body-3">${parseInt(temp)}&deg;</p>
+            `;
+            hourlyForecastSection.querySelector("[data-temp-list]").appendChild(tempCardUI);
+            const windCardUI = document.createElement("div");
+            windCardUI.classList.add("card", "card-sm", "slider-card");
+            windCardUI.innerHTML = `
+                <p class="body-3">${module.getHour(dt, timezone)}</p>
+                <img src="./assets/images/weather_icons/direction.png" width="48" height="48" loading="lazy" alt="wind direction at ${deg} degrees" title="wind direction at ${deg} degrees" style="transform: rotate(${deg}deg)">
+                <p class="body-3">${parseInt(module.mps_kmh(speed))}km/h</p> 
+            `;
+            hourlyForecastSection.querySelector("[data-wind-list]").appendChild(windCardUI);
+        }
+    })
+    
 
     /**
      * 5 DAY FORECAST UI

@@ -64,13 +64,33 @@ export function getTime(unix, timezone) {
      * return formatted time `{hour}:{minutes} {meridiem}`
      */
     const date = new Date((unix + timezone) * 1000);
-    const hour24 = date.getHours();
+    const hour24 = date.getUTCHours();
     const hour12 = (hour24%12)==0 ? 12 : hour24%12;
-    const minutes = date.getMinutes();
+    const minutes = date.getUTCMinutes();
     const minutesNew = (minutes/10)<1 ? '0'+minutes : minutes;
     const meridiem = (hour24/12)<1 ? "AM" : "PM";
 
     return `${hour12}:${minutesNew} ${meridiem}`;
+}
+
+
+/**
+ * Converts DateTime format from Unix e.g "1661870592" to "7 AM"
+ * 
+ * @param {number} dateunix Unix Date in seconds
+ * @param {number} timezone Timezone offset in seconds from UTC 
+ */
+export function getHour(unix, timezone){
+    const date = new Date((unix + timezone) * 1000);
+    const hour24 = date.getUTCHours();
+    const hour12 = (hour24%12)==0 ? 12 : hour24%12;
+    const meridiem = (hour24/12)<1 ? "AM" : "PM";
+    return `${hour12} ${meridiem}`
+}
+
+
+export function mps_kmh(mps) {
+    return (mps * 3600) / 1000;
 }
 
 

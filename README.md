@@ -66,9 +66,9 @@ https://api.openweathermap.org/data/2.5/weather?lat={LATITUDE}&lon={LONGITUDE}&u
 
 <br><br>
 
-5 DAY FORECAST REQUEST
+5 DAY/ 3 Hour FORECAST REQUEST
 ```
-api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid={{open-weather-api-key}}
+https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid={{open-weather-api-key}}
 ```
 5 day forecast is available at any location on the globe. It includes weather forecast data with 3-hour step.
 
