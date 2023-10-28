@@ -83,51 +83,6 @@
                     <section class="section" aria-label="current-weather" data-current-weather>
                     </section>
                     <section class="section forecast" aria-labelledby="5 Days Forecast" data-forecast>
-                        <h2 class="title-2">5 Days Forecast</h2>
-                        <div class="card card-lg forecast-card">
-                            <ul>
-                                <li class="card-item">
-                                    <div class="wrapper">
-                                        <img src="./assets/images/weather_icons/01d.png" width="36" height="36" alt="Overcast Clouds" class="weather-icon">
-                                        <span>25&deg;</span>
-                                    </div>
-                                    <p class="label-1">17 Feb</p>
-                                    <p class="label-1">Friday</p>
-                                </li>
-                                <li class="card-item">
-                                    <div class="wrapper">
-                                        <img src="./assets/images/weather_icons/01d.png" width="36" height="36" alt="Overcast Clouds" class="weather-icon">
-                                        <span>25&deg;</span>
-                                    </div>
-                                    <p class="label-1">17 Feb</p>
-                                    <p class="label-1">Friday</p>
-                                </li>
-                                <li class="card-item">
-                                    <div class="wrapper">
-                                        <img src="./assets/images/weather_icons/01d.png" width="36" height="36" alt="Overcast Clouds" class="weather-icon">
-                                        <span>25&deg;</span>
-                                    </div>
-                                    <p class="label-1">17 Feb</p>
-                                    <p class="label-1">Friday</p>
-                                </li>
-                                <li class="card-item">
-                                    <div class="wrapper">
-                                        <img src="./assets/images/weather_icons/01d.png" width="36" height="36" alt="Overcast Clouds" class="weather-icon">
-                                        <span>25&deg;</span>
-                                    </div>
-                                    <p class="label-1">17 Feb</p>
-                                    <p class="label-1">Friday</p>
-                                </li>
-                                <li class="card-item">
-                                    <div class="wrapper">
-                                        <img src="./assets/images/weather_icons/01d.png" width="36" height="36" alt="Overcast Clouds" class="weather-icon">
-                                        <span>25&deg;</span>
-                                    </div>
-                                    <p class="label-1">17 Feb</p>
-                                    <p class="label-1">Friday</p>
-                                </li>
-                            </ul>
-                        </div>
                     </section>
                 </div>
                 <!--LEFT SECTIONS-->
@@ -144,14 +99,14 @@
 
                 </div>
                 <!--LOADING ICON-->
-                <div class="loading"></div>
+                <div class="loading" data-loading-icon></div>
             </article>
         </main>
 
-        <section class="error-modal">
+        <section class="error-modal" data-error-modal>
             <h1 class="heading">404</h1>
-            <p class="title-3">Page not found!</p>
-            <a href="#" class="label-1 aqi-5">Go Home</a>
+            <p class="title-3" data-error-message>Page not found!</p>
+            <a href="#/weather?lat=51.5073219&lon=-0.1276474" class="label-1 aqi-5" data-error-button>Go Home</a>
         </section>
     </body>
 </html>

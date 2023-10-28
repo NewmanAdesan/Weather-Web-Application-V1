@@ -129,7 +129,7 @@ searchField.addEventListener("input", function(e) {
                             <span class="title">${name}</span>
                             <span class="label-2 subtitle">${state}, ${country}</span>
                         </div>
-                        <a href="#/weather?lat=${lat}&lng=${lon}" class="item-link has-state" data-search-togglers></a>
+                        <a href="#/weather?lat=${lat}&lon=${lon}" class="item-link has-state" data-search-togglers></a>
                     `
                     addEventOnElements(searchResultItemUI.querySelectorAll("[data-search-togglers]"), "click", toggleSearch);
                     searchResultList.appendChild(searchResultItemUI);
@@ -147,11 +147,17 @@ searchField.addEventListener("input", function(e) {
 /**
  * 
  * @param {*} lat 
- * @param {*} lng 
+ * @param {*} lon 
  */
 export function updateWeather(lat, lon) {
 
+    // make the loading icon visible
+    const loadingIcon = document.querySelector("[data-loading-icon]");
+    loadingIcon.classList.add("active");
 
+    // in the case the error modal is visble, make it invisible
+    const errorModalSection = document.querySelector("[data-error-modal]"); 
+    errorModalSection.classList.remove("active");
 
     /**
      * CHANGE CURRENT LOCATION BUTTON STYLE
@@ -164,9 +170,8 @@ export function updateWeather(lat, lon) {
     } else {
         currentLocBtn.removeAttribute("disabled");
     };
+
     
-
-
     /**
      * CURRENT WEATHER UI
      *
@@ -373,16 +378,17 @@ export function updateWeather(lat, lon) {
             hourlyForecastSection.querySelector("[data-wind-list]").appendChild(windCardUI);
         }
     
-
         /**
          * 5 DAY FORECAST UI
-         * this functionality will be placed after the forecst UI because we are using the same data
-         * because this URL releases weather information for 5 days, in a 3 hour step which means 40 datapoints, which means 8 datapoints for each day
-         * 1) Create the forecastUI dom element
-         * 2) Create the cardUI for each day
-         * 2a) divide the number of datapoints given into 5, for each set, the average temp will be the temperature for a day
-         * 2b) utilize the getDate(unix, timezone) to obtain the data format "Friday 17, Feb"
-         * 3) add the cardUI to the forecastUI dom element, add the forecastUI dom element to the dom
+         *
+         * 1) Designed the `forecastUI` DOM element to display the 5-day forecast.
+         * 2) Created `cardUI` for each day to present weather information.
+         *       - Divided the number of data points into 5 sets, averaging the temperature for each day.
+         *       - Utilized the `getDate(unix, timezone)` function to format the date as "Friday 17, Feb."
+         * 3) Added the `cardUI` elements to the `forecastUI` DOM element.
+         * 4) Appended the `forecastUI` to the document for display.
+         *
+         *
          */
         forecastSection.innerHTML = `
             <h2 class="title-2">5 Days Forecast</h2>
@@ -401,8 +407,9 @@ export function updateWeather(lat, lon) {
             AverageTemp = AverageTemp / dataPointsPerDay;
 
             // obtain date
-            let [weekday, monthday, month] = module.getDate(forecastList[i]["dt"], timezone).split(" ");
-            monthday = monthday.slice(0, -1);
+            let [_, weekday, monthday, month] = /^(.+) (.+), (.+)$/.exec(module.getDate(forecastList[i]["dt"], timezone))
+
+            // obtain weather icon & description
             const [{description, icon}] = forecastList[i].weather;
 
             // render ui for daily temperature
@@ -419,44 +426,45 @@ export function updateWeather(lat, lon) {
             forecastSection.querySelector("[data-forecast-card-list]").appendChild(cardUI);
         }
 
-
+        /**
+         * DATA LOADING ICON
+         * 1) at the start of the update weather function, the loading icon will become visible
+         * 2) in the last fetching operation of the update weather function, the loading icon will become invisible
+         * 3) if there was an error fetching a data information (in the fetchDataFromServer function) the Error404(type) function is called with type = "fetchingError"
+         * 3a) the Error Modal displays 404, "Error Occured When Fetching Data", reload button
+         * 3b) on click of the reload button reloads the browser & make the error modal invisible.
+         */
+         loadingIcon.classList.remove("active");
     })
-
-
-    /**
-     * DATA LOADING ICON
-     * 1) at the start of the update weather function, the loading icon will become visible
-     * 2) at the end of the update weather function, the loading icon will become invisible
-     * 3) if there was an error fetching a data information (in the fetchDataFromServer function) the Error404(type, payload) function is called
-     * 3a) the Error404 function is called with the type "fetchingError" and the payload {lat, lon}
-     * 3b) in the fetchDataFromServer(apiURL, callback) function the lat & lon will be obtained from the apiURL for the purpose of serving it to the error function
-     * 3b) the Error Modal shows 404, "Data Fetching Error", reload button
-     * 3c) on click of the reload button calls the updateWeather(lat, lon) function once again with the lat & lon gotten from the apiURL
-     * 3d) the loading icon will become invisible
-     * 3e) the Error Modal will become visible
-     */
 
     /**
      * THE ERROR404 FUNCTION
-     * 1) this function has two parameters "type" and payload
-     * 1a) for now it support three types "fetchingError", "pageNotFound" and "geolocationError". we would use a switch case to deal with each type
-     * 1b) type "fetchingError" would have the payload {apiURL}, type "pageNotFound" & type "geolocationError" would have the payload {lat, lon}
-     * 2) for type "fetchingError", 
-     * 2a) the Error Modal element shows 404, "Data Fetching Error", "Reload" button
-     * 2b) on click of the reload button; the Error Modal will become invisible & the updateWeather(lat, lon) function once again will be called with the lat & lon gotten from the apiURL
-     * 2c) the loading icon will become invisible
-     * 2d) the Error Modal will become invisible
-     * 3) for type "pageNotFound",
-     * 3a) the Error Modal element shows 404, "Page not found!", "Go Home" button
-     * 3b) the loading icon will become invisible
-     * 3c) the Error Modal will become invisible
-     * 3d) on click of the "Go Home" button; the Error Modal will become invisible & the updatWeather(lat, lon) function will be called with the lat & lon gotten from the pay load
-     * 4) for type "geolocationError",
-     * 4a) the Error Modal element shows 404, "User Location Fetching Error", "Go Home" button
-     * 4b) the loading icon will become invisible
-     * 4c) the Error Modal will become invisible
-     * 4d) on click of the "Go Home" button; the Error Modal will become invisible & the updatWeather(lat, lon) function will be called with the lat & lon gotten from the pay load
+     * 1) this function makes the Error Modal to be visible. it accept a parameter called `type`
+     * 2) if type is "fetchingError" the Error Modal displays 404, "Error Occured When Fetching Data", reload button
+     * 3) on click of the reload button reloads the browser & make the error modal invisible.
      * 
+     * 
+[FEATURE] Enhanced Data Loading Icon and Error404 Function
+
+**Data Loading Icon:**
+
+1. The loading icon becomes visible at the start of the "update weather" function.
+2. The loading icon becomes invisible after the last fetching operation in the "update weather" function.
+3. If there is an error when fetching data (in the `fetchDataFromServer` function), the `Error404(type)` function is invoked with `type` set to "fetchingError."
+   - The Error Modal displays `404`, `Error Occurred When Fetching Data`, and a `Reload` button.
+   - On clicking the reload button, the browser is reloaded, and the error modal is hidden.
+
+**Error404 Function:**
+
+1. The `Error404` function controls the visibility of the Error Modal and accepts an optional parameter called `type`.
+2. When `type` is `fetchingError`, the Error Modal displays `404`, `Error Occurred When Fetching Data` and a reload button.
+3. Clicking the reload button reloads the browser and hides the error modal.
+4. When the `type` is `geolocationError` the Error Modal displays `404`, `Error Occurred when Fetching User Location` and a `Go Home` button
+5. When the `type` is not specified, the Error Modal displays `404`, `Page not Found!` and a `Go Home` button. this is its default value.
+
+This commit enhances the handling of the data loading icon and the error modal, providing a better user experience when data fetching errors occur.
+
+
      */
 
     /**
@@ -474,4 +482,31 @@ export function updateWeather(lat, lon) {
      * 
      * 
      */
+
+    /**
+     * FADE-IN FUNCTIONALITY
+     */
+}
+
+
+export function Error404(type, payload) {
+    
+    const errorModalSection = document.querySelector("[data-error-modal]");    
+    const errorModalMessage = errorModalSection.querySelector("[data-error-message]");
+    const errorModalButton = errorModalSection.querySelector("[data-error-button]");
+    const loadingIcon = document.querySelector("[data-loading-icon]");
+
+    if (type == "fetchingError") {
+        errorModalMessage.innerHTML = "Error Occured When Fetching Data";
+        errorModalButton.innerHTML = "Reload";
+        errorModalButton.addEventListener("click", () => location.reload());
+    }
+
+    if (type == "geolocationError") {
+        errorModalMessage.innerHTML = "Error Occured When Fetching User's Location";
+    }
+
+    loadingIcon.classList.remove("active");
+    errorModalSection.classList.add("active");
+
 }

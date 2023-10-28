@@ -570,6 +570,14 @@ article.container::before {
   color: var(--on-surface-variant);
 }
 
+.forecast-card .card-item p:first-of-type {
+  width: 50px;
+}
+
+.forecast-card .card-item p:last-of-type {
+  width: 80px;
+}
+
 
 
 
@@ -727,6 +735,7 @@ article.container::before {
   width: 100%;
   height: 100%;
   display: none;
+  row-gap: 8px;
   place-content: center;
   text-align: center;
   background-color: var(--background);
@@ -783,12 +792,40 @@ article.container::before {
 /*-----------------------------------*\
   #MEDIA QUERIES
 \*-----------------------------------*/
-
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 328px) {
 
     /**
     * VARIABLES & UTILITIES
     */
+    :root {
+      --label-1: 1.3rem;
+      --title-3: 1.5rem;
+      --body-3: 1.5rem;
+    }
+
+
+    /**
+      * HIGHLIGHTS UI
+      */
+    .highlights .badge {
+      padding: 2px 8px;
+    }
+  
+}
+
+@media screen and (max-width: 370px) {
+    /**
+      * HIGHLIGHTS UI
+      */
+    .highlights-card.one .m-icon { display: none; }
+    .highlights-card .card-item { justify-content: flex-start;}
+}
+
+@media screen and (min-width: 768px) {
+
+    /**
+      * VARIABLES & UTILITIES
+      */
 
     :root {
     --title-1: 2.6rem;

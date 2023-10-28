@@ -7,15 +7,24 @@
  * @student newmanadesan <newmanadesan@gmail.com, https://github.com/NewmanAdesan>
  */
 
+
+import {Error404} from "./app.js";
+
+
+
 /**
  * Fetches data from a specified URL and calls the specified callback function with the data received as its argument.
  * @param {string} apiURL api url to fetch data from
  * @param {Function} callback Callback Function to process fetched data
  */
 function fetchDataFromServer(apiURL, callback){
+    // const positionRegex = new RegExp("lat=(.+)&lon=(.+)");
+    // const [_, lat, lon] = positionRegex.exec(apiURL);
+
     fetch(apiURL)
         .then(res => res.json())
         .then(data => callback(data))
+        .catch(err => Error404("fetchingError", {apiURL}))
 }
 
 
