@@ -1,3 +1,9 @@
+Modern Search Integration
+International Timestamp
+SPA with vanilla javascript
+Geolocation Enabled
+
+
 
 # Project Title
 

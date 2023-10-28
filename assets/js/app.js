@@ -325,20 +325,23 @@ export function updateWeather(lat, lon) {
 
     /**
      * HOURLY FORECAST UI
-     * 1) fetch data using the openweather forecast URL 
-     * 1a) create a function forecast(lat, lon) that returns the forecast URL
-     * 1b) utilize the forecast function to fetch the data 
-     * 2) destructure the data needed; the number of data points(cnt) & the list of weather infor for each data point
-     * 3) dynamically render the HoulyForecastUI
-     * 3a) create the HoulyForecastUI dom element 
-     * 3b) for each weather information in the list create a temp-card & wind card and add to the HoulyForecastUI
-     * 3c) create a getHour(unix, timezone) that would transform the time format of the hour time from "1605182400" --> "6 AM"
-     * 3d) for the wind-card research in the docu
-     * 3d) for the wind-card research & use the value of the wind direction to rotate the direction.png in the right direction
-     * 3e) for the wind-card create a mps_kmh(mps) that would convert metre per second to kilometer per hour
+     * 1) Fetched data from the OpenWeather forecast API.
+     *      - Created the `forecast(lat, lon)` function to generate the forecast URL.
+     *      - Utilized the `forecast` function to fetch the data.
+     *
+     * 2) Destructured the necessary data, including the number of data points (cnt) and the list of weather information for each data point.
+     *
+     * 3) Dynamically rendered the Hourly Forecast UI.
+     *      - Created the `HourlyForecastUI` DOM element.
+     *      - For each weather information in the list, created a `temp-card` and `wind card`, and added them to the `HourlyForecastUI`.
+     *      - Designed the `getHour(unix, timezone)` function to format the hour time from "1605182400" to "6 AM."
+     *      - Utilized documentation to determine and apply wind direction rotation based on wind direction values.
+     *      - Created the `mps_kmh(mps)` function to convert meters per second to kilometers per hour for the wind card.
+     *
      */
     fetchDataFromServer(url.forecast(lat, lon), function(data){
         const {cnt: dataPoints, list:forecastList, city: {timezone}} = data;
+        const dataPointsPerDay = dataPoints / 5;
         hourlyForecastSection.innerHTML = `
         <h2 class="title-2">Today at</h2>
         <div class="slider-container">
@@ -369,19 +372,55 @@ export function updateWeather(lat, lon) {
             `;
             hourlyForecastSection.querySelector("[data-wind-list]").appendChild(windCardUI);
         }
-    })
     
 
-    /**
-     * 5 DAY FORECAST UI
-     * this functionality will be placed after the forecst UI because we are using the same data
-     * because this URL releases weather information for 5 days, in a 3 hour step which means 40 datapoints, which means 8 datapoints for each day
-     * 1) Create the forecastUI dom element
-     * 2) Create the cardUI for each day
-     * 2a) divide the number of datapoints given into 5, for each set, the average temp will be the temperature for a day
-     * 2b) utilize the getDate(unix, timezone) to obtain the data format "Friday 17, Feb"
-     * 3) add the cardUI to the forecastUI dom element, add the forecastUI dom element to the dom
-     */
+        /**
+         * 5 DAY FORECAST UI
+         * this functionality will be placed after the forecst UI because we are using the same data
+         * because this URL releases weather information for 5 days, in a 3 hour step which means 40 datapoints, which means 8 datapoints for each day
+         * 1) Create the forecastUI dom element
+         * 2) Create the cardUI for each day
+         * 2a) divide the number of datapoints given into 5, for each set, the average temp will be the temperature for a day
+         * 2b) utilize the getDate(unix, timezone) to obtain the data format "Friday 17, Feb"
+         * 3) add the cardUI to the forecastUI dom element, add the forecastUI dom element to the dom
+         */
+        forecastSection.innerHTML = `
+            <h2 class="title-2">5 Days Forecast</h2>
+            <div class="card card-lg forecast-card">
+                <ul data-forecast-card-list>
+                </ul>
+            </div>
+        
+        `
+        for (let i=0; i<dataPoints; i+=dataPointsPerDay) {
+            // calculate average temp
+            let AverageTemp = 0;
+            for (let j=i; j<i+dataPointsPerDay; j++ ){
+                AverageTemp += forecastList[j]["main"]["temp"];
+            }
+            AverageTemp = AverageTemp / dataPointsPerDay;
+
+            // obtain date
+            let [weekday, monthday, month] = module.getDate(forecastList[i]["dt"], timezone).split(" ");
+            monthday = monthday.slice(0, -1);
+            const [{description, icon}] = forecastList[i].weather;
+
+            // render ui for daily temperature
+            const cardUI = document.createElement("li");
+            cardUI.classList.add("card-item");
+            cardUI.innerHTML = `
+            <div class="wrapper">
+                <img src="./assets/images/weather_icons/${icon}.png" width="36" height="36" alt="${description}" class="weather-icon" title="${description}" />
+                <span>${parseInt(AverageTemp)}&deg;</span>
+            </div>
+            <p class="label-1">${monthday} ${month}</p>
+            <p class="label-1">${weekday}</p>
+            `
+            forecastSection.querySelector("[data-forecast-card-list]").appendChild(cardUI);
+        }
+
+
+    })
 
 
     /**
