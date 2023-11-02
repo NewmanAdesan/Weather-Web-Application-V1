@@ -36,11 +36,11 @@ const url = {
     },
 
     geo(querry) {
-        return `http://api.openweathermap.org/geo/1.0/direct?q=${querry}&limit=${LIMIT}&appid=${API_KEY}`
+        return `https://api.openweathermap.org/geo/1.0/direct?q=${querry}&limit=${LIMIT}&appid=${API_KEY}`
     },
 
     airPollution(lat, lon) {
-        return `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+        return `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
     },
 
     forecast(lat, lon) {
