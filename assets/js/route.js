@@ -8,31 +8,42 @@
  * @author codewithsadee <mohammadsadee24@gmail.com>
  */
 
-import {updateWeather} from "./app.js"
+import {Error404, updateWeather} from "./app.js"
 
 
 window.addEventListener("load", ()=>{
-    if (window.location.hash.includes("current-location")) {
-        updateWeather("51.5073219", "-0.1276474");
-        return;
-    }
-    
-    if (window.location.hash==""){
-        window.location.hash = "#/weather?lat=51.5073219&lon=-0.1276474"
-    }
-
-    const [param, query] = window.location.hash.slice(1).split("?")
-    const [latQuery, lonQuery] = query.split("&");
-    updateWeather(latQuery.slice(4), lonQuery.slice(4))
+    if (window.location.hash=="") window.location.hash = "#/weather?lat=51.5073219&lon=-0.1276474";
+    checkHash();
 })
 
-// window.addEventListener("hashchange", ()=>{
-//     if (window.location.hash.includes("current-location")) {
-//         updateWeather("51.5073219", "-0.1276474");
-//         return;
-//     }
+window.addEventListener("hashchange", ()=>{checkHash()})
 
-//     const [param, query] = window.location.hash.slice(1).split("?")
-//     const [latQuery, lonQuery] = query.split("&");
-//     updateWeather(latQuery.slice(4), lonQuery.slice(4))
-// })
+function checkHash(){
+    const windowHash = window.location.hash;
+    console.log(windowHash);
+    const regex1 = new RegExp("^#\/weather\\?lat=(.+)&lon=(.+)$")
+    const regex2 = new RegExp("^#\/current-location$")
+    console.log(regex1)
+    console.log(regex1.test(windowHash))
+
+    if (regex1.test(windowHash)){
+        const [_, lat, lon] = regex1.exec(windowHash);
+        updateWeather(lat, lon);
+        return;
+    }
+
+    if (regex2.test(windowHash)){
+        window.navigator.geolocation.getCurrentPosition(
+            (res) => {
+                const {latitude, longitude} = res.coords;
+                updateWeather(latitude, longitude);
+            },
+            (err) => {
+                Error404("geolocationError");
+            }
+        )
+        return;
+    }
+
+    Error404();
+}

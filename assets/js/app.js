@@ -428,11 +428,11 @@ export function updateWeather(lat, lon) {
 
         /**
          * DATA LOADING ICON
-         * 1) at the start of the update weather function, the loading icon will become visible
-         * 2) in the last fetching operation of the update weather function, the loading icon will become invisible
-         * 3) if there was an error fetching a data information (in the fetchDataFromServer function) the Error404(type) function is called with type = "fetchingError"
-         * 3a) the Error Modal displays 404, "Error Occured When Fetching Data", reload button
-         * 3b) on click of the reload button reloads the browser & make the error modal invisible.
+         * 1. The loading icon becomes visible at the start of the `update weather` function.
+         * 2. The loading icon becomes invisible after the last fetching operation in the `update weather` function.
+         * 3. If there is an error when fetching data (in the `fetchDataFromServer` function), the `Error404(type)` function is invoked with `type` set to "fetchingError."
+         *       - The Error Modal displays `404`, `Error Occurred When Fetching Data`, and a `Reload` button.
+         *       - On clicking the reload button, the browser is reloaded, and the error modal is hidden.
          */
          loadingIcon.classList.remove("active");
     })
@@ -443,15 +443,7 @@ export function updateWeather(lat, lon) {
      * 2) if type is "fetchingError" the Error Modal displays 404, "Error Occured When Fetching Data", reload button
      * 3) on click of the reload button reloads the browser & make the error modal invisible.
      * 
-     * 
-[FEATURE] Enhanced Data Loading Icon and Error404 Function
-
-**Data Loading Icon:**
-
-1. The loading icon becomes visible at the start of the "update weather" function.
-2. The loading icon becomes invisible after the last fetching operation in the "update weather" function.
-3. If there is an error when fetching data (in the `fetchDataFromServer` function), the `Error404(type)` function is invoked with `type` set to "fetchingError."
-   - The Error Modal displays `404`, `Error Occurred When Fetching Data`, and a `Reload` button.
+     * tton.
    - On clicking the reload button, the browser is reloaded, and the error modal is hidden.
 
 **Error404 Function:**
@@ -485,6 +477,11 @@ This commit enhances the handling of the data loading icon and the error modal, 
 
     /**
      * FADE-IN FUNCTIONALITY
+     * 1) we will attach an animation to a css class called "fade-in"
+     * 2) this animation transition the opacity of an element from 0 to 1 in 300ms
+     * 3) the ".content-left" & ".content-right" element houses the UI for our web application; using css styling, they will only display when they have the class ".fade-in"
+     * 4) in the update-weather function when all UI has been dynamically rendered successuflly, the fade-in class will be added to the `.content-left` & `.content-right` element
+     * 5)when the scroll track brings the footer of the page into view, the `fade-in` class will be added to the footer element.
      */
 }
 
