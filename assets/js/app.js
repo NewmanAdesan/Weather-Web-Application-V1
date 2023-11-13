@@ -171,6 +171,10 @@ export function updateWeather(lat, lon) {
         currentLocBtn.removeAttribute("disabled");
     };
 
+
+    document.querySelector('[data-content-left]').classList.remove("fade-in");
+    document.querySelector('[data-content-right]').classList.remove("fade-in");
+
     
     /**
      * CURRENT WEATHER UI
@@ -196,7 +200,6 @@ export function updateWeather(lat, lon) {
     hourlyForecastSection.innerHTML = "";
 
     fetchDataFromServer(url.currentWeather(lat, lon), function(data){
-        console.log(data);
         const {main, weather, dt, timezone, name:state, sys, visibility} = data;
         const {temp, feels_like, humidity, pressure} = main;
         const [{description, icon}] = weather;
@@ -435,6 +438,8 @@ export function updateWeather(lat, lon) {
          *       - On clicking the reload button, the browser is reloaded, and the error modal is hidden.
          */
          loadingIcon.classList.remove("active");
+         document.querySelector('[data-content-left]').classList.add("fade-in");
+         document.querySelector('[data-content-right]').classList.add("fade-in");
     })
 
     /**
@@ -461,7 +466,7 @@ This commit enhances the handling of the data loading icon and the error modal, 
 
     /**
      * SINGLE PAGE APPLICATION FUNCTIONALITY
-     * 1) on window load event or on window hash change event, we are going to check the location hash of the browser & process it. this processing will be encapsulate in a function called "checkhash"
+     * 1) on window load event, we are going to check the location hash of the browser & process it. this processing will be encapsulate in a function called "checkhash"
      * 2) on window load event, if there is not window location hash, we would set the hash to a default location "#/weather?lat=10.99&lon=44.34" (we will use london location sha)
      * 3) the chechHash function implementation
      * 3a) our application only support two type of hash "#/weather?lat={latitude}&lon={longitude}" & "#/current-location"
@@ -481,7 +486,7 @@ This commit enhances the handling of the data loading icon and the error modal, 
      * 2) this animation transition the opacity of an element from 0 to 1 in 300ms
      * 3) the ".content-left" & ".content-right" element houses the UI for our web application; using css styling, they will only display when they have the class ".fade-in"
      * 4) in the update-weather function when all UI has been dynamically rendered successuflly, the fade-in class will be added to the `.content-left` & `.content-right` element
-     * 5)when the scroll track brings the footer of the page into view, the `fade-in` class will be added to the footer element.
+     * 5) when the scroll track brings the footer of the page into view, the `fade-in` class will be added to the footer element.
      */
 }
 

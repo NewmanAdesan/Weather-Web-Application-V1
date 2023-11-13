@@ -238,7 +238,7 @@ sub {vertical-align: baseline;}
 .has-state:hover::before {background-color: var(--white-alpha-4);}
 .has-state:is(:focus, :focus-visible)::before {
   background-color: var(--white-alpha-8);
-  animation: ripple 200ms ease-in forwards
+  animation: ripple 200ms ease-in forwards;
 }
 
 @keyframes ripple {
@@ -341,6 +341,22 @@ sub {vertical-align: baseline;}
   border-radius: var(--radius-16);
 }
 
+
+
+/* REUSED STYLE: THE FADE IN ANIMATION */
+.fade-in {
+  animation: fade-in 300ms ease-in forwards;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 
 
 /*-----------------------------------*\
@@ -507,8 +523,9 @@ article.container::before {
   pointer-events: none;
 }
 
-
 .section:not(:last-child) {margin-bottom: 12px;}
+
+.content-left, .content-right { opacity: 0; }
 
 
 
