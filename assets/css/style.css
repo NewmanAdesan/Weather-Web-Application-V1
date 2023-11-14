@@ -517,6 +517,7 @@ article.container::before {
   position: fixed;
   left: 0;
   bottom: 0;
+  z-index: 1;
   width: 100%;
   height: 50px;
   background-image: var(--gradient-1);
@@ -786,6 +787,7 @@ article.container::before {
   justify-content: center;
   align-items: center;
   margin-block-start: 24px;
+  margin-block-end: 24px;
   color: var(--on-surface-variant);
   text-align: center;
 }
@@ -913,6 +915,11 @@ article.container::before {
     }
     .slider-list::before { display: none; }
     .slider-list::after { min-width: 12px; }
+
+    
+    .footer {
+      margin-block-end: 0px;
+    }
 }
 
 

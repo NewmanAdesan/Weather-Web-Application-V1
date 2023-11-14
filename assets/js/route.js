@@ -13,7 +13,13 @@ import {Error404, updateWeather} from "./app.js"
 
 window.addEventListener("load", ()=>{
     if (window.location.hash=="" || window.location.hash=="#") window.location.hash = "#/weather?lat=51.5073219&lon=-0.1276474";
+    else checkHash();
+    console.log("load ran");
+})
+
+window.addEventListener("hashchange", ()=>{
     checkHash();
+    console.log("hash change ran");
 })
 
 function checkHash(){
